@@ -1,0 +1,22 @@
+
+.app-layout {
+    width: 720px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.title {
+    color: black;
+}
+
+.color-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button{
+    margin-left: 10px;
+}

@@ -1,0 +1,34 @@
+
+
+.color-picker{
+    border-style: solid;
+    border-color: #c4c4c4;
+    border-width: 1px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+}
+
+.heart-icon{
+    width: 25px;
+    height: 25px;
+}
+
+.color-input{
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    background-color: white;
+    border-style: none none none solid;;
+    border-color: #c4c4c4;
+    border-width: 1px;
+}
+
+.name-input{
+    width: 100px;
+    height: 25px;
+    background-color: white;
+    color: grey;
+    border: none;
+
+}

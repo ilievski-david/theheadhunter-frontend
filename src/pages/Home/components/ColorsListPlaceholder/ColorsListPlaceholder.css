@@ -1,0 +1,31 @@
+
+.colors-list-placeholder{
+    
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.icon-box{
+    width: 92px;
+    height: 92px;
+    border-style: solid;
+    border-color: #c4c4c4;
+    border-width: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ninja-icon{
+    width: 25px;
+    height: 25px;
+}
+
+.text-empty-collection{
+    color: #3C4043;
+}
+
+.text-please-add{
+    color: #636669;
+}
