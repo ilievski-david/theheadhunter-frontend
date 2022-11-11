@@ -2,15 +2,17 @@ import React , {useState} from "react";
 import "./ColorPicker.css";
 import heartIcon from '../../../../assets/heart.svg';
 
-const ColorPicker = () => {
+const ColorPicker = ({callbackInput} : {callbackInput : any}) => {
   const [name,setName] = useState("Color name");
   const [color, setColor] = useState("#8F00FF");
 
   let onChangeName = (e: React.FormEvent<HTMLInputElement>): void => {
     setName(e.currentTarget.value);
+    callbackInput({name: e.currentTarget.value, hex: color});
   };
   let onChangeColor = (e: React.FormEvent<HTMLInputElement>): void => {
     setColor(e.currentTarget.value);
+    callbackInput({name: name, hex: e.currentTarget.value});
   }
 
   return (
