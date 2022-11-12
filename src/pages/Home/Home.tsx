@@ -7,6 +7,7 @@ import ColorsList from "./components/ColorsList/ColorsList";
 import TokenManager from "../../auth/tokenManager";
 import axios from "axios";
 import Snackbar from "./components/Snackbar/Snackbar";
+import { SERVER_URL } from "../../config";
 // create a new component called Home
 const Home = () => {
     // create new state called token
@@ -15,19 +16,27 @@ const Home = () => {
     const [colors, setColors] = useState<any[] | null>(null);
     const [userInput,setUserInput] = useState<any>({name: "", hex: ""});
     const [snackbarMessage,setSnackbarMessage] = useState<string >("Error");
+    let [listUpdated,setListUpdated] = useState<number>(0);
     useEffect(() => {
         let _token = TokenManager.loadToken();
         setToken(_token);
         getColors(_token);
         
     }, [])
+    
+    useEffect(() => {
+        if(listUpdated != 0){
+            getColors(token); 
+        }
+        
+    }, [listUpdated])
    
 
     let getColors = (_token : string | null) => {
         if(!_token) {return null}
         axios({
             method: 'post',
-            url: 'http://localhost:8080/getColors',
+            url: SERVER_URL + '/getColors',
             data: {
                 userToken: _token,
             }
@@ -57,14 +66,14 @@ const Home = () => {
     let removeColor = (colorId : number) => {
         axios({
             method: 'delete',
-            url: 'http://localhost:8080/removeColor',
+            url: SERVER_URL + '/removeColor',
             data: {
                 userToken: token,
                 id: colorId,
             }
           })
         .then((response) => {
-            
+            setListUpdated(++listUpdated);
         }).catch((error) => {
             //console log status
             console.log(error.response.status);
@@ -75,7 +84,7 @@ const Home = () => {
     let addColor = (input : {name : string, hex : string}) => {
         axios({
             method: 'post',
-            url: 'http://localhost:8080/addColor',
+            url: SERVER_URL + '/addColor',
             data: {
                 userToken: token,
                 hex: input.hex,
@@ -83,6 +92,7 @@ const Home = () => {
             }
           })
         .then((response) => {
+            setListUpdated(++listUpdated);
             console.log(response.status);
             response.status === 200 ? showSnackbar("Color added") : showSnackbar("Error");
         }).catch((error) => {
@@ -93,29 +103,29 @@ const Home = () => {
 
     let handleRemove = (id: any) => {
         removeColor(id);
-        getColors(token)
+        let update = listUpdated + 1;
+        setListUpdated(++listUpdated);
+        console.log("list updated", listUpdated);
         console.log(id)
     }
 
     let handleAdd = () => {
         console.log("clicked")
         addColor(userInput);
-        getColors(token)
-        
+        console.log("list updated", listUpdated);
     }
 
     let handleInput = (input: any) => {
         setUserInput(input);
-        console.log(input);
         console.log(userInput);
     }
 
     return (
         <div className="app-layout">
         <h1 className="title">My Favorite Colors</h1>
-        <div className="color-form"> <ColorPicker callbackInput={handleInput}/> <AddButton callbackAdd={handleAdd}/> </div>
+        <div className="color-form"> <ColorPicker callbackInput={handleInput.bind(this)}/> <AddButton callbackAdd={handleAdd.bind(this)}/> </div>
         <div className="colors-section">
-            {colors === null ? <ColorsListPlaceholder/> : <ColorsList colors={colors} callbackRemove={handleRemove}/>}
+            {colors === null ? <ColorsListPlaceholder/> : <ColorsList colors={colors} callbackRemove={handleRemove.bind(this)}/>}
         </div>
         <Snackbar message={snackbarMessage}/>
         </div>
