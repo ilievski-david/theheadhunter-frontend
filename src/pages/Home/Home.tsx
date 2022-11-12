@@ -6,43 +6,70 @@ import ColorsListPlaceholder from "./components/ColorsListPlaceholder/ColorsList
 import ColorsList from "./components/ColorsList/ColorsList";
 import TokenManager from "../../auth/tokenManager";
 import axios from "axios";
+import Snackbar from "./components/Snackbar/Snackbar";
 // create a new component called Home
 const Home = () => {
     // create new state called token
 
     const [token,setToken] = useState<string | null>(null);
-    const [colors, setColors] = useState<any[]>([]);
+    const [colors, setColors] = useState<any[] | null>(null);
     const [userInput,setUserInput] = useState<any>({name: "", hex: ""});
+    const [snackbarMessage,setSnackbarMessage] = useState<string >("Error");
     useEffect(() => {
-        setToken(TokenManager.loadToken());
-        }, [token])
-
+        let _token = TokenManager.loadToken();
+        setToken(_token);
+        getColors(_token);
+        
+    }, [])
    
 
-    
-
-    // get colors from getColors function in useEffect
-    useEffect(() => {
-        getColors();
-    }, [])
-
-
-    let getColors = () => {
+    let getColors = (_token : string | null) => {
+        if(!_token) {return null}
         axios({
             method: 'post',
             url: 'http://localhost:8080/getColors',
             data: {
-                userToken: token,
+                userToken: _token,
             }
           })
         .then((response) => {
-            let colors = response.data;
-            setColors(JSON.parse(colors))
-            console.log("colors from server", colors.length);
+            let colors_res = response.data;
+            setColors(colors_res)
+            console.log("token", token);
+            console.log("colors from server", colors_res);
         }).catch((error) => {
             console.log(error);
         })
         
+    }
+
+    let showSnackbar = (message : string) => {
+        setSnackbarMessage(message);
+        let x = document.getElementById("snackbar");
+        if(!x){return null}
+        x.className = "show";
+        setTimeout(function(){ 
+            if(!x){return null}
+            x.className = x.className.replace("show", ""); },
+            3000);
+    }
+
+    let removeColor = (colorId : number) => {
+        axios({
+            method: 'delete',
+            url: 'http://localhost:8080/removeColor',
+            data: {
+                userToken: token,
+                id: colorId,
+            }
+          })
+        .then((response) => {
+            
+        }).catch((error) => {
+            //console log status
+            console.log(error.response.status);
+            
+        })
     }
 
     let addColor = (input : {name : string, hex : string}) => {
@@ -56,22 +83,25 @@ const Home = () => {
             }
           })
         .then((response) => {
-            let colors = response.data;
-            //setColors(colors)
-            console.log("colors from server", colors);
+            console.log(response.status);
+            response.status === 200 ? showSnackbar("Color added") : showSnackbar("Error");
         }).catch((error) => {
+            showSnackbar(error.response.status.toString());
             console.log(error);
         })
     }
 
     let handleRemove = (id: any) => {
+        removeColor(id);
+        getColors(token)
         console.log(id)
     }
 
     let handleAdd = () => {
         console.log("clicked")
         addColor(userInput);
-        getColors()
+        getColors(token)
+        
     }
 
     let handleInput = (input: any) => {
@@ -85,9 +115,9 @@ const Home = () => {
         <h1 className="title">My Favorite Colors</h1>
         <div className="color-form"> <ColorPicker callbackInput={handleInput}/> <AddButton callbackAdd={handleAdd}/> </div>
         <div className="colors-section">
-            {colors.length === 0 ? <ColorsListPlaceholder/> : <ColorsList colors={colors} callbackRemove={handleRemove}/>}
-          
+            {colors === null ? <ColorsListPlaceholder/> : <ColorsList colors={colors} callbackRemove={handleRemove}/>}
         </div>
+        <Snackbar message={snackbarMessage}/>
         </div>
     );
     };

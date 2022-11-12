@@ -1,3 +1,11 @@
+:root {
+    --border-color: #EBECEC;
+    --input-text-color: #8A8C8E;
+    --remove-button-hover: #EBECEC;
+    --remove-button-active: #f3f3f3;
+    
+}
+
 .colors-section{
     color: #3C4043;
     display: flex;
@@ -5,7 +13,7 @@
     width: 100%;
 }
 .text-color-collection{
-    margin-right: auto;
+    margin: 16px auto 0px 20px;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
@@ -23,6 +31,7 @@
 .color-item{
     display: flex;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .color-box{
@@ -30,10 +39,27 @@
     height: 28px;
 }
 .color-name{
+    margin-left: 10px;
 }
 
 .color-remove{
+    margin-right: 20px;
+    padding: 7px 10.5px;
     margin-left: auto;
+    border-style: solid;;
+    border-color: var(--border-color);
+    border-width: 1px;
+    
+}
+
+.color-remove:hover{
+    background-color: var(--remove-button-hover);
+    cursor: pointer;
+}
+
+/* change background color of color-remove on click*/
+.color-remove:active{
+    background-color: var(--remove-button-active);
 }
 
 

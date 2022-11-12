@@ -17,7 +17,7 @@ const ColorsList = ({colors, callbackRemove} : {colors : any, callbackRemove : a
                 return <li key={color.id} className="color-item">
                     <div className="color-box" style={myComponentStyle}> </div>
                     <div className="color-name">{color.name}</div>
-                    <div className="color-remove" onClick={() => {handleClick(color.id)}}>remove</div>
+                    <div className="color-remove" onClick={() => {handleClick(color.ID)}}>Remove color</div>
                 </li>
             })}
         </ul>
