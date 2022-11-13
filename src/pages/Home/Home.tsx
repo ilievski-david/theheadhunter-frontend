@@ -47,14 +47,17 @@ const Home = () => {
    
 
 
-    let showSnackbar = (message : string) => {
+    let showSnackbar = (message : string, isError : boolean) => {
         setSnackbarMessage(message);
         let x = document.getElementById("snackbar");
         if(!x){return null}
-        x.className = "show";
+        x.className = "show background-green";
+        if(isError){
+            x.className = "show background-red";
+        }
         setTimeout(function(){ 
             if(!x){return null}
-            x.className = x.className.replace("show", ""); },
+            x.className = x.className = ""},
             3000);
     }
 
@@ -82,25 +85,24 @@ const Home = () => {
         .then((response) => {
             setListUpdated(++listUpdated);
             console.log(response.status);
-            response.status === 200 ? showSnackbar("Color added") : showSnackbar("Error");
+            response.status === 200 ? showSnackbar("Color added", false) : showSnackbar("Error", true);
         }).catch((error) => {
-            showSnackbar(error.response.status.toString());
             console.log(error);
             switch(error.response.status){
                 case 402:
-                    showSnackbar("Most have color name");
+                    showSnackbar("Most have color name", true);
                     break;
                 case 403:
-                    showSnackbar("Color name needs to be less than 20 characters");
+                    showSnackbar("Color name needs to be less than 20 characters", true);
                     break;
                 case 404:
-                    showSnackbar("App error");
+                    showSnackbar("App error", true);
                     break;
                 case 405:
-                    showSnackbar("Must have a unique color name");
+                    showSnackbar("Must have a unique color name", true);
                     break;
                 case 406:
-                    showSnackbar("Color already exists");
+                    showSnackbar("Color already exists", true);
                     break;
             }
         })
