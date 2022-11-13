@@ -7,11 +7,8 @@ class BasicOps {
     static fetchColors = async (token : string | null) : Promise<ColorInterface[] | null> => {
         if(!token) { throw new Error('Token is null'); }
         let res =  await axios({
-            method: 'post',
-            url: SERVER_URL + '/getColors',
-            data: {
-                userToken: token,
-            }
+            method: 'get',
+            url: SERVER_URL + '/getColors/' + token,
           });
         return res.data;
     }

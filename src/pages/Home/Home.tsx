@@ -86,6 +86,23 @@ const Home = () => {
         }).catch((error) => {
             showSnackbar(error.response.status.toString());
             console.log(error);
+            switch(error.response.status){
+                case 402:
+                    showSnackbar("Most have color name");
+                    break;
+                case 403:
+                    showSnackbar("Color name needs to be less than 20 characters");
+                    break;
+                case 404:
+                    showSnackbar("App error");
+                    break;
+                case 405:
+                    showSnackbar("Must have a unique color name");
+                    break;
+                case 406:
+                    showSnackbar("Color already exists");
+                    break;
+            }
         })
         console.log("list updated", listUpdated);
     }
