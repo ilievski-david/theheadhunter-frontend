@@ -5,21 +5,19 @@ import AddButton from "./components/AddButton/AddButton";
 import ColorsListPlaceholder from "./components/ColorsListPlaceholder/ColorsListPlaceholder";
 import ColorsList from "./components/ColorsList/ColorsList";
 import TokenManager from "../../auth/tokenManager";
-import axios from "axios";
 import Snackbar from "./components/Snackbar/Snackbar";
-import { SERVER_URL } from "../../config";
 import InputInterface from "../../models/InputInterface";
 import ColorInterface from "../../models/ColorInterface";
 import BasicOps from "../../api/BasicOps";
 // create a new component called Home
 const Home = () => {
-    // create new state called token
-
+    
     const [token,setToken] = useState<string | null>(null);
     const [colors, setColors] = useState<ColorInterface[] | null>(null);
     const [userInput,setUserInput] = useState<InputInterface>({name: "", hex: ""});
     const [snackbarMessage,setSnackbarMessage] = useState<string >("Error");
     let [listUpdated,setListUpdated] = useState<number>(0);
+
     useEffect(() => {
         let _token = TokenManager.loadToken();
         setToken(_token);
@@ -45,8 +43,6 @@ const Home = () => {
         
     }, [listUpdated])
    
-
-
     let showSnackbar = (message : string, isError : boolean) => {
         setSnackbarMessage(message);
         let x = document.getElementById("snackbar");
@@ -61,18 +57,13 @@ const Home = () => {
             3000);
     }
 
-   
-
-   
-
     let handleRemove = (id: number) => {
         console.log(id)
         BasicOps.removeColor(token, id)
-        .then((response) => {
+        .then(() => {
             setListUpdated(++listUpdated);
         }).catch((error) => {
-            //console log status
-            console.log(error.response.status);
+            console.log(error);
             
         })
         console.log("list updated", listUpdated);
@@ -80,12 +71,10 @@ const Home = () => {
     }
 
     let handleAdd = () => {
-        console.log("clicked")
         BasicOps.addColor(token, userInput)
-        .then((response) => {
+        .then(() => {
             setListUpdated(++listUpdated);
-            console.log(response.status);
-            response.status === 200 ? showSnackbar("Color added", false) : showSnackbar("Error", true);
+            showSnackbar("Color added", false);
         }).catch((error) => {
             console.log(error);
             switch(error.response.status){
@@ -106,12 +95,11 @@ const Home = () => {
                     break;
             }
         })
-        console.log("list updated", listUpdated);
+        console.log("list updated");
     }
 
     let handleInput = (input: InputInterface) => {
         setUserInput(input);
-        console.log(userInput);
     }
 
     return (
