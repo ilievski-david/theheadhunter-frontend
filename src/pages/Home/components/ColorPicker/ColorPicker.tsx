@@ -1,8 +1,8 @@
 import React , {useState} from "react";
 import "./ColorPicker.css";
 import heartIcon from '../../../../assets/heart.svg';
-
-const ColorPicker = ({callbackInput} : {callbackInput : any}) => {
+import InputInterface from "../../../../models/InputInterface";
+const ColorPicker = ({callbackInput} : {callbackInput  : (a: InputInterface) => void}) => {
   const [name,setName] = useState("Color name");
   const [color, setColor] = useState("#8F00FF");
 

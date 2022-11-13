@@ -1,11 +1,8 @@
 import React from "react";
 import "./ColorsList.css";
-const ColorsList = ({colors, callbackRemove} : {colors : any, callbackRemove : any}) => {
+import ColorInterface from "../../../../models/ColorInterface";
+const ColorsList = ({colors, callbackRemove} : {colors : ColorInterface[], callbackRemove : (a: number) => void}) => {
     
-
-    let handleClick = (id : any) => {
-        callbackRemove(id);
-    }
 
     return <div className="colors-section">
         <h2 className="text-color-collection">Color collection</h2>
@@ -14,10 +11,10 @@ const ColorsList = ({colors, callbackRemove} : {colors : any, callbackRemove : a
                 const myComponentStyle = {
                     background: color.hex,
                 }
-                return <li key={color.id} className="color-item">
+                return <li key={color.ID} className="color-item">
                     <div className="color-box" style={myComponentStyle}> </div>
                     <div className="color-name">{color.name}</div>
-                    <div className="color-remove" onClick={() => {handleClick(color.ID)}}>Remove color</div>
+                    <div className="color-remove" onClick={() => {callbackRemove(color.ID)}}>Remove color</div>
                 </li>
             })}
         </ul>

@@ -8,49 +8,44 @@ import TokenManager from "../../auth/tokenManager";
 import axios from "axios";
 import Snackbar from "./components/Snackbar/Snackbar";
 import { SERVER_URL } from "../../config";
+import InputInterface from "../../models/InputInterface";
+import ColorInterface from "../../models/ColorInterface";
+import BasicOps from "../../api/BasicOps";
 // create a new component called Home
 const Home = () => {
     // create new state called token
 
     const [token,setToken] = useState<string | null>(null);
-    const [colors, setColors] = useState<any[] | null>(null);
-    const [userInput,setUserInput] = useState<any>({name: "", hex: ""});
+    const [colors, setColors] = useState<ColorInterface[] | null>(null);
+    const [userInput,setUserInput] = useState<InputInterface>({name: "", hex: ""});
     const [snackbarMessage,setSnackbarMessage] = useState<string >("Error");
     let [listUpdated,setListUpdated] = useState<number>(0);
     useEffect(() => {
         let _token = TokenManager.loadToken();
         setToken(_token);
-        getColors(_token);
+        BasicOps.fetchColors(_token).then((res) => {
+            setColors(res);
+        }).catch((error) => {
+            console.log(error);
+            
+        })
         
     }, [])
     
     useEffect(() => {
         if(listUpdated != 0){
-            getColors(token); 
+            BasicOps.fetchColors(token).then((res) => {
+                setColors(res);
+            }).catch((error) => {
+                console.log(error);
+                
+            })
+
         }
         
     }, [listUpdated])
    
 
-    let getColors = (_token : string | null) => {
-        if(!_token) {return null}
-        axios({
-            method: 'post',
-            url: SERVER_URL + '/getColors',
-            data: {
-                userToken: _token,
-            }
-          })
-        .then((response) => {
-            let colors_res = response.data;
-            setColors(colors_res)
-            console.log("token", token);
-            console.log("colors from server", colors_res);
-        }).catch((error) => {
-            console.log(error);
-        })
-        
-    }
 
     let showSnackbar = (message : string) => {
         setSnackbarMessage(message);
@@ -63,15 +58,13 @@ const Home = () => {
             3000);
     }
 
-    let removeColor = (colorId : number) => {
-        axios({
-            method: 'delete',
-            url: SERVER_URL + '/removeColor',
-            data: {
-                userToken: token,
-                id: colorId,
-            }
-          })
+   
+
+   
+
+    let handleRemove = (id: number) => {
+        console.log(id)
+        BasicOps.removeColor(token, id)
         .then((response) => {
             setListUpdated(++listUpdated);
         }).catch((error) => {
@@ -79,18 +72,13 @@ const Home = () => {
             console.log(error.response.status);
             
         })
+        console.log("list updated", listUpdated);
+        console.log(id)
     }
 
-    let addColor = (input : {name : string, hex : string}) => {
-        axios({
-            method: 'post',
-            url: SERVER_URL + '/addColor',
-            data: {
-                userToken: token,
-                hex: input.hex,
-                name: input.name
-            }
-          })
+    let handleAdd = () => {
+        console.log("clicked")
+        BasicOps.addColor(token, userInput)
         .then((response) => {
             setListUpdated(++listUpdated);
             console.log(response.status);
@@ -99,23 +87,10 @@ const Home = () => {
             showSnackbar(error.response.status.toString());
             console.log(error);
         })
-    }
-
-    let handleRemove = (id: any) => {
-        removeColor(id);
-        let update = listUpdated + 1;
-        setListUpdated(++listUpdated);
-        console.log("list updated", listUpdated);
-        console.log(id)
-    }
-
-    let handleAdd = () => {
-        console.log("clicked")
-        addColor(userInput);
         console.log("list updated", listUpdated);
     }
 
-    let handleInput = (input: any) => {
+    let handleInput = (input: InputInterface) => {
         setUserInput(input);
         console.log(userInput);
     }
