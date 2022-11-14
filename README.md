@@ -3,7 +3,7 @@
 ### Tasks
 1. User React and Typescript.
 <br />
-`The project was created with vite create React Typescript.`
+- The project was created with vite create React Typescript.
 2. Do not use any 3rd party component or CSS library.
 <br />
 `No 3rd party component or CSS library was used.`
