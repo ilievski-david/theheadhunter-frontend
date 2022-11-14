@@ -12,7 +12,7 @@
 ### For extra points
 1. ✅ The mock calls save the data into localStorage and the Color collection is initialized with the saved data on browser refresh.
 2. ✅ Install the app somewhere(and share its URL).
-3. ✅ Implement the exact appearance of the design.
+3. ✅ Implement the exact appearance of the design. (I've done my best)
 4. ✅ Your solution looks exacly the same on both Chrome and Firefox.
 5. ✅ Create a README in your repo and add notes about installation, implementation details or any important info about your solution. 
 6. ✅ Add validation: a color name should not be an empty string, color names and color codes must be unique. Too long color names are not allowed.
