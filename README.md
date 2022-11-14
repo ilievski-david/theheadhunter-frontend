@@ -37,5 +37,6 @@
 <br/>
 `All of these validation cases were implement in the backend server. As stated in the backend task. On color add you get a snackbar informing you if you have submited an invalid request or if the request was valid.`
 7. Handle overflow: if a color name is long it should not overlap with the Remove color button. If the color list is long use scrollbar.
+<br/>
 `Overflow is only handled by the long name validation. Scroll is implemented.`
 
