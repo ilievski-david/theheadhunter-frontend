@@ -2,7 +2,7 @@
 ## Frontend task
 
 ## Tasks
-✅ for done ❌ for not done
+✅ DONE ❌ NOT DONE
 1. ✅ User React and Typescript.
 2. ✅ Do not use any 3rd party component or CSS library.
 3. ✅ Add async mock function CREATE, READ, DELETE colors.
