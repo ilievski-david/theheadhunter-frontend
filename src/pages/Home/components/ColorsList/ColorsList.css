@@ -40,15 +40,27 @@
 }
 .color-name{
     margin-left: 10px;
+    overflow: hidden;
 }
 
 .color-remove{
+    width: 118px;
+    height: 36px;
+    /*
+    padding: 7px 10.5px; */
     margin-right: 20px;
-    padding: 7px 10.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: auto;
     border-style: solid;;
     border-color: var(--border-color);
     border-width: 1px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
     
 }
 
