@@ -75,12 +75,33 @@
 }
 
 
-.disable-scrollbars::-webkit-scrollbar {
-    background: transparent; /* Chrome/Safari/Webkit */
-    width: 0px;
+
+
+  /* chrome width */
+  .scrlbr::-webkit-scrollbar {
+    width: 15px;
+    padding-left: 3px;
+    background-color: white;
+    
   }
-      
-  .disable-scrollbars {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
+  /* chrome Track */
+  .scrlbr::-webkit-scrollbar-track { 
+    border-left: solid 0.5px #e0e0e0;
+    background: transparent;
+}
+   
+  /* chrome Handle */
+  .scrlbr::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #888; 
+    border: 3px solid transparent;
+    background-clip: content-box;
   }
+  
+  /* firefox */
+.scrlbr{
+    scrollbar-color: #888 white;
+    scrollbar-width: 10px;
+    
+
+}

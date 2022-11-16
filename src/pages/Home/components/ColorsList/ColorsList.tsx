@@ -6,7 +6,7 @@ const ColorsList = ({colors, callbackRemove} : {colors : ColorInterface[], callb
 
     return <div className="colors-section">
         <h2 className="text-color-collection">Color collection</h2>
-        <ul className="colors-list disable-scrollbars">
+        <ul className="colors-list scrlbr">
             {colors.map((color: any) => {
                 const myComponentStyle = {
                     background: color.hex,
