@@ -1,6 +1,9 @@
 
 ## Frontend task
 
+## Project info
+The app is created with vite. It uses typescript and react. The app is hosted on digital ocean app platform. On every push the app is built and published by app platform. The app is live at https://theheadhunter.davidilievski.dev/.
+
 ## Tasks
 ✅ DONE ❌ NOT DONE 👷 WIP
 1. ✅ User React and Typescript.
