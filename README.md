@@ -2,7 +2,7 @@
 ## Frontend task
 
 ## Project info
-The app is created with vite. It uses typescript and react. The app is hosted on digital ocean app platform. On every push the app is built and published by app platform. The app is live at https://theheadhunter.davidilievski.dev/.
+The app is created with vite. It uses typescript and react. The app is hosted on digital ocean app platform. The app uses the app platforrm auto build and deploy feature on update to the master branch. The app is live at https://theheadhunter.davidilievski.dev/.
 
 To track the state of your color collection, the frontend generates a token for the user and saves it in localStorage. With every api call you send your token to edit and retrieve your collection. The tasks from the frontend (mock functions and validation) are implemented in the backend as the backend tasks state.
 
